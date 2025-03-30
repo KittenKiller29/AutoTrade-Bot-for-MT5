@@ -83,16 +83,19 @@
                         <TextBlock Text="Запустить робота" TextWrapping="Wrap"/>
                     </StackPanel>
                 </Button>
-                <Button Margin="0,10,5,0" Height="30" IsEnabled="false">
+                <Button Margin="0,15,5,0" Height="30" IsEnabled="false">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Остановить работу" TextWrapping="Wrap"/>
                     </StackPanel>
                 </Button>
-                <Button Margin="0,65,5,0" Height="30">
+                <Button Margin="0,15,5,0" Height="30">
                     <TextBlock Text="Получить статистику" TextWrapping="Wrap"/>
                 </Button>
-                <Button Margin="0,10,5,0" Height="30" Click="Button_Click">
-                    <TextBlock Text="Загрузить данные" TextWrapping="Wrap"/>
+                <Button Margin="0,15,5,0" Height="30" Click="Button_Click">
+                    <TextBlock Text="Загрузить настройки" TextWrapping="Wrap"/>
+                </Button>
+                <Button Margin="0,15,5,0" Height="30" Name="SaveBtn" Click="SaveBtn_Click">
+                    <TextBlock Text="Сохранить настройки" TextWrapping="Wrap"/>
                 </Button>
             </StackPanel>
         </StackPanel>

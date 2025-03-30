@@ -38,6 +38,9 @@ namespace AutoTradeLauncher
             SLTB.Text = Properties.Settings.Default.SL;
             CountTB.Text = Properties.Settings.Default.Count;
             DropTB.Text = Properties.Settings.Default.Drop;
+
+            ConsoleLog.AppendText(CreateLogMessage("----------Лаунчер робота запущен, удачной торговли!----------"));
+
             CreateDefaultFile();
         }
 
@@ -61,11 +64,12 @@ namespace AutoTradeLauncher
 
                 // Записываем значения в файл
                 File.WriteAllLines(filePath, values);
+                ConsoleLog.AppendText(CreateLogMessage("Создан файл настроек data.txt"));
 
             }
             catch (Exception ex)
             {
-                //ConsoleLog.AppendText($"Ошибка при создании файла: {ex.Message}");
+                ConsoleLog.AppendText(CreateLogMessage($"Ошибка при создании файла настроек: {ex.Message}"));
             }
 
         }
@@ -179,6 +183,56 @@ namespace AutoTradeLauncher
             SLTB.Text = lines[2];
             CountTB.Text = lines[3];
             DropTB.Text = lines[4];
+
+            ConsoleLog.AppendText(CreateLogMessage("Настройки из файла data.txt загружены"));
+
+            Properties.Settings.Default.LotSize = LotSizeTB.Text;
+            Properties.Settings.Default.TP = TPTB.Text;
+            Properties.Settings.Default.SL = SLTB.Text;
+            Properties.Settings.Default.Count = CountTB.Text;
+            Properties.Settings.Default.Drop = DropTB.Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private string CreateLogMessage(string text)
+        {
+            DateTime now = DateTime.Now;
+            return "[" + now.ToString("HH:mm:ss") + "]: " + text + "\n";
+        }
+
+        private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            CreateDefaultFile();
+            try
+            {
+                string exePath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                string filePath = System.IO.Path.Combine(exePath, "data.txt");
+                // 5 значений для записи
+                string[] values = {
+                    LotSizeTB.Text,
+                    TPTB.Text,
+                    SLTB.Text,
+                    CountTB.Text,
+                    DropTB.Text
+                };
+
+                // Записываем значения в файл
+                File.WriteAllLines(filePath, values);
+
+                Properties.Settings.Default.LotSize = LotSizeTB.Text;
+                Properties.Settings.Default.TP = TPTB.Text;
+                Properties.Settings.Default.SL = SLTB.Text;
+                Properties.Settings.Default.Count = CountTB.Text;
+                Properties.Settings.Default.Drop = DropTB.Text;
+                Properties.Settings.Default.Save();
+
+                ConsoleLog.AppendText(CreateLogMessage("Настройки сохранены в файл data.txt"));
+            }
+            catch (Exception ex)
+            {
+                ConsoleLog.AppendText(CreateLogMessage($"Ошибка при сохранении настроек: {ex.Message}"));
+            }
+
         }
     }
 }
