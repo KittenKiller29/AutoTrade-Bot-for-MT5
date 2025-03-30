@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoTradeLauncher"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Closing="Window_Closing"
         Title="Лаунчер робота автотрейдинга" Height="465" Width="800" ResizeMode="NoResize">
     <Window.Resources>
         <Color x:Key="Color1">#FF8BB0FF</Color>
@@ -53,32 +53,32 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Текущий капитал к моменту запуска" FontWeight="Bold" Margin="15,5,0,0"/>
-                    <TextBox IsReadOnly="true" Height="17" Width="170" TextChanged="TextBox_TextChanged" Margin="159,5,0,0"/>
+                    <TextBox IsReadOnly="true" Height="17" Width="170" Margin="159,5,0,0" Name="DepositeTB"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Объем лота" FontWeight="Bold" Margin="15,5,0,0"/>
-                    <TextBox Height="17" Width="170" TextChanged="TextBox_TextChanged" Margin="306,5,0,0"/>
+                    <TextBox Height="17" Width="170" Margin="306,5,0,0" Name="LotSizeTB"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Число TP пунктов" FontWeight="Bold" Margin="15,5,0,0"/>
-                    <TextBox Height="17" Width="170" TextChanged="TextBox_TextChanged" Margin="270,5,0,0"/>
+                    <TextBox Height="17" Width="170" Margin="270,5,0,0" Name="TPTB"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Число SL пунктов" FontWeight="Bold" Margin="15,5,0,0"/>
-                    <TextBox Height="17" Width="170" TextChanged="TextBox_TextChanged" Margin="272,5,0,0"/>
+                    <TextBox Height="17" Width="170" Margin="272,5,0,0" Name="SLTB"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Максимальное число одновременных сделок" FontWeight="Bold" Margin="15,5,0,0"/>
-                    <TextBox Height="17" Width="170" TextChanged="TextBox_TextChanged" Margin="103,5,0,0"/>
+                    <TextBox Height="17" Width="170" Margin="103,5,0,0" Name="CountTB"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Число неудачных подряд сделок для отключения робота" FontWeight="Bold" Margin="15,5,0,0"/>
-                    <TextBox Height="17" Width="170" TextChanged="TextBox_TextChanged" Margin="34,5,0,0"/>
+                    <TextBox Height="17" Width="170" Margin="34,5,0,0" Name="DropTB"/>
                 </StackPanel>
             </StackPanel>
             <Border BorderBrush="Black" BorderThickness="0,0,1,0" Height="230" Width="1" Margin="15,10,0,10"/>
             <StackPanel Height="240" Width="170" Margin="16,0,0,0">
-                <Button Margin="0,15,5,0" Height="30">
+                <Button Margin="0,15,5,0" Height="30" Click="StartButton_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Запустить робота" TextWrapping="Wrap"/>
                     </StackPanel>
@@ -88,15 +88,18 @@
                         <TextBlock Text="Остановить работу" TextWrapping="Wrap"/>
                     </StackPanel>
                 </Button>
-                <Button Margin="0,105,5,0" Height="30">
+                <Button Margin="0,65,5,0" Height="30">
                     <TextBlock Text="Получить статистику" TextWrapping="Wrap"/>
+                </Button>
+                <Button Margin="0,10,5,0" Height="30" Click="Button_Click">
+                    <TextBlock Text="Загрузить данные" TextWrapping="Wrap"/>
                 </Button>
             </StackPanel>
         </StackPanel>
         <Border BorderBrush ="Black" BorderThickness="0,0,0,1" Margin="10,0,20,0"/>
         <StackPanel Height="168" Width="792" Orientation="Horizontal">
             <StackPanel Height="168" Width="792">
-                <TextBox Margin="15,15,25,15" Height="133" Width="752" IsReadOnly="true" VerticalScrollBarVisibility="Visible">
+                <TextBox Margin="15,15,25,15" Height="133" Width="752" IsReadOnly="true" VerticalScrollBarVisibility="Visible" Name ="ConsoleLog">
                 </TextBox>
             </StackPanel>
         </StackPanel>
