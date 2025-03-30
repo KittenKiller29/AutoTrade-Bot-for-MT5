@@ -1,0 +1,105 @@
+﻿<Window x:Class="AutoTradeLauncher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoTradeLauncher"
+        mc:Ignorable="d"
+        Title="Лаунчер робота автотрейдинга" Height="465" Width="800" ResizeMode="NoResize">
+    <Window.Resources>
+        <Color x:Key="Color1">#FF8BB0FF</Color>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="2">
+                            <ContentPresenter x:Name="ContentSite"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Цвет при наведении -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFE3F2FF"/>
+                                <!-- Синий цвет -->
+                            </Trigger>
+                            <!-- Цвет для неактивной кнопки -->
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#FFE8E8E8"/>
+                                <Setter Property="Foreground" Value="#FF515151"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <StackPanel Width="792" Height="439" Background="#FFE8E8E8">
+        <Border BorderBrush="Black" BorderThickness="0,0,0,1" Margin="10,10,20,0"/>
+        <StackPanel Height="240" Width="792" Orientation="Horizontal">
+            <StackPanel Height="240" Width="570">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Робот торгов для пары EURUSD" FontWeight="Bold" Margin="15,10,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Текущий капитал к моменту запуска" FontWeight="Bold" Margin="15,5,0,0"/>
+                    <TextBox IsReadOnly="true" Height="17" Width="170" TextChanged="TextBox_TextChanged" Margin="159,5,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Объем лота" FontWeight="Bold" Margin="15,5,0,0"/>
+                    <TextBox Height="17" Width="170" TextChanged="TextBox_TextChanged" Margin="306,5,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Число TP пунктов" FontWeight="Bold" Margin="15,5,0,0"/>
+                    <TextBox Height="17" Width="170" TextChanged="TextBox_TextChanged" Margin="270,5,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Число SL пунктов" FontWeight="Bold" Margin="15,5,0,0"/>
+                    <TextBox Height="17" Width="170" TextChanged="TextBox_TextChanged" Margin="272,5,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Максимальное число одновременных сделок" FontWeight="Bold" Margin="15,5,0,0"/>
+                    <TextBox Height="17" Width="170" TextChanged="TextBox_TextChanged" Margin="103,5,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Число неудачных подряд сделок для отключения робота" FontWeight="Bold" Margin="15,5,0,0"/>
+                    <TextBox Height="17" Width="170" TextChanged="TextBox_TextChanged" Margin="34,5,0,0"/>
+                </StackPanel>
+            </StackPanel>
+            <Border BorderBrush="Black" BorderThickness="0,0,1,0" Height="230" Width="1" Margin="15,10,0,10"/>
+            <StackPanel Height="240" Width="170" Margin="16,0,0,0">
+                <Button Margin="0,15,5,0" Height="30">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Запустить робота" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Button>
+                <Button Margin="0,10,5,0" Height="30" IsEnabled="false">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Остановить работу" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Button>
+                <Button Margin="0,105,5,0" Height="30">
+                    <TextBlock Text="Получить статистику" TextWrapping="Wrap"/>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <Border BorderBrush ="Black" BorderThickness="0,0,0,1" Margin="10,0,20,0"/>
+        <StackPanel Height="168" Width="792" Orientation="Horizontal">
+            <StackPanel Height="168" Width="792">
+                <TextBox Margin="15,15,25,15" Height="133" Width="752" IsReadOnly="true" VerticalScrollBarVisibility="Visible">
+                </TextBox>
+            </StackPanel>
+        </StackPanel>
+        <Border BorderBrush="Black" BorderThickness="0,1,0,0" Margin="10,-5,20,0"/>
+    </StackPanel>
+</Window>
