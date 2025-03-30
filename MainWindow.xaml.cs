@@ -22,8 +22,13 @@ namespace AutoTradeLauncher
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
+    /// 
+
     public partial class MainWindow : Window
     {
+        //Хэндл подключения
+        private IntPtr handle;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -40,6 +45,8 @@ namespace AutoTradeLauncher
             DropTB.Text = Properties.Settings.Default.Drop;
 
             ConsoleLog.AppendText(CreateLogMessage("----------Лаунчер робота запущен, удачной торговли!----------"));
+
+            ValidateUser();
 
             CreateDefaultFile();
         }
@@ -232,7 +239,33 @@ namespace AutoTradeLauncher
             {
                 ConsoleLog.AppendText(CreateLogMessage($"Ошибка при сохранении настроек: {ex.Message}"));
             }
+        }
+
+        private void ValidateUser()
+        {
+            string exePath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string filePath = System.IO.Path.Combine(exePath, "mt5user.txt");
+            if (!File.Exists(filePath))
+            {
+                MessageBox.Show(
+                    "Отсутствует файл подключения mt5user.txt, лаунчер будет немедленно закрыт.", 
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Application.Current.Shutdown();
+            }
+
+            string[] lines = File.ReadAllLines(filePath);
+
+            if(lines.Length != 3)
+            {
+                MessageBox.Show(
+                    "Ожидалось 3 строки данных в mt5useer.txt, "+"но найдено "+lines.Length.ToString() +", лаунчер будет немедленно закрыт",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Application.Current.Shutdown();
+            }
+
+
 
         }
+
     }
 }

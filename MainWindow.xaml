@@ -52,8 +52,8 @@
                     <Label Content="Робот торгов для пары EURUSD" FontWeight="Bold" Margin="15,10,0,0"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Текущий капитал к моменту запуска" FontWeight="Bold" Margin="15,5,0,0"/>
-                    <TextBox IsReadOnly="true" Height="17" Width="170" Margin="159,5,0,0" Name="DepositeTB"/>
+                    <Label Content="Текущий капитал, $." FontWeight="Bold" Margin="15,5,0,0"/>
+                    <TextBox IsReadOnly="true" Height="17" Width="170" Margin="256,5,0,0" Name="DepositeTB"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Объем лота" FontWeight="Bold" Margin="15,5,0,0"/>
