@@ -16,6 +16,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Runtime.InteropServices;
+using NetMQ;
+using NetMQ.Sockets;
 
 namespace AutoTradeLauncher
 {
@@ -26,8 +29,10 @@ namespace AutoTradeLauncher
 
     public partial class MainWindow : Window
     {
-        //Хэндл подключения
-        private IntPtr handle;
+        private readonly PublisherSocket _publisher;
+        private readonly SubscriberSocket _subscriber;
+        private bool isConected;
+
 
         public MainWindow()
         {
@@ -44,9 +49,18 @@ namespace AutoTradeLauncher
             CountTB.Text = Properties.Settings.Default.Count;
             DropTB.Text = Properties.Settings.Default.Drop;
 
+            _publisher = new PublisherSocket();
+            _publisher.Bind("tcp://127.0.0.1:5963"); // MT5 подключается сюда
+
+            _subscriber = new SubscriberSocket();
+            _subscriber.Connect("tcp://127.0.0.1:5964"); // Получаем ответы от MT5
+            _subscriber.Subscribe("");
+
             ConsoleLog.AppendText(CreateLogMessage("----------Лаунчер робота запущен, удачной торговли!----------"));
 
-            ValidateUser();
+            isConected = false;
+
+            ConnectionCheck();
 
             CreateDefaultFile();
         }
@@ -106,7 +120,7 @@ namespace AutoTradeLauncher
         private string ValidateDatas()
         {
             string msg = "";
-            if(!double.TryParse(LotSizeTB.Text, NumberStyles.AllowDecimalPoint,
+            if (!double.TryParse(LotSizeTB.Text, NumberStyles.AllowDecimalPoint,
                 CultureInfo.InvariantCulture,
                 out _))
             {
@@ -171,6 +185,11 @@ namespace AutoTradeLauncher
             Properties.Settings.Default.Count = CountTB.Text;
             Properties.Settings.Default.Drop = DropTB.Text;
             Properties.Settings.Default.Save();
+
+            _publisher?.Close();
+            _subscriber?.Close();
+            NetMQConfig.Cleanup();
+
             base.OnClosed(e);
         }
 
@@ -241,31 +260,33 @@ namespace AutoTradeLauncher
             }
         }
 
-        private void ValidateUser()
+        private async Task ConnectionCheck()
         {
-            string exePath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string filePath = System.IO.Path.Combine(exePath, "mt5user.txt");
-            if (!File.Exists(filePath))
+
+            while (true)
             {
-                MessageBox.Show(
-                    "Отсутствует файл подключения mt5user.txt, лаунчер будет немедленно закрыт.", 
-                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                Application.Current.Shutdown();
+                _publisher.SendFrame("PING");
+
+                // Ждём ответа 3 секунды
+                if (_subscriber.TryReceiveFrameString(TimeSpan.FromSeconds(5), out string topic))
+                {
+                    string response = _subscriber.ReceiveFrameString();
+                    if (response == "PONG" && !isConected)
+                    {
+                        isConected = true;
+                        ConsoleLog.AppendText(CreateLogMessage("Подключение к MT5 активно"));
+                        //Пингуем раз в минуту
+                        await Task.Delay(55000);
+                        continue;
+
+                    }
+                }
+                isConected = false;
+                ConsoleLog.AppendText(CreateLogMessage("Подключение с MT5 потеряно, попытка переподключения"));
+
+                //Пингуем раз в минуту
+                await Task.Delay(55000);
             }
-
-            string[] lines = File.ReadAllLines(filePath);
-
-            if(lines.Length != 3)
-            {
-                MessageBox.Show(
-                    "Ожидалось 3 строки данных в mt5useer.txt, "+"но найдено "+lines.Length.ToString() +", лаунчер будет немедленно закрыт",
-                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                Application.Current.Shutdown();
-            }
-
-
-
         }
-
     }
 }

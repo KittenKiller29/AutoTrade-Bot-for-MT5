@@ -49,7 +49,7 @@
         <StackPanel Height="240" Width="792" Orientation="Horizontal">
             <StackPanel Height="240" Width="570">
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Робот торгов для пары EURUSD" FontWeight="Bold" Margin="15,10,0,0"/>
+                    <Label Content="Робот торгов для пары EURUSD, тактика 'Скальпинг'" FontWeight="Bold" Margin="15,10,0,0"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Текущий капитал, $." FontWeight="Bold" Margin="15,5,0,0"/>
@@ -60,12 +60,12 @@
                     <TextBox Height="17" Width="170" Margin="306,5,0,0" Name="LotSizeTB"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Число TP пунктов" FontWeight="Bold" Margin="15,5,0,0"/>
-                    <TextBox Height="17" Width="170" Margin="270,5,0,0" Name="TPTB"/>
+                    <Label Content="Число добавленных TP пунктов" FontWeight="Bold" Margin="15,5,0,0"/>
+                    <TextBox Height="17" Width="170" Margin="186,5,0,0" Name="TPTB"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Число SL пунктов" FontWeight="Bold" Margin="15,5,0,0"/>
-                    <TextBox Height="17" Width="170" Margin="272,5,0,0" Name="SLTB"/>
+                    <Label Content="Число добавленных SL пунктов" FontWeight="Bold" Margin="15,5,0,0"/>
+                    <TextBox Height="17" Width="170" Margin="188,5,0,0" Name="SLTB"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Максимальное число одновременных сделок" FontWeight="Bold" Margin="15,5,0,0"/>
